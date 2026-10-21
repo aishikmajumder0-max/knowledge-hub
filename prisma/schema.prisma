@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ResourceType {
+  CLASS
+  NOTE
+  ANIMATION
+  RESOURCE
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(USER)
+  createdAt    DateTime @default(now())
+}
+
+model Resource {
+  id          String       @id @default(cuid())
+  title       String
+  description String       @default("")
+  type        ResourceType
+  subject     String       @default("General")
+  level       String       @default("All levels")
+  url         String       @default("")
+  fileName    String       @default("")
+  published   Boolean      @default(true)
+  price       Float        @default(499)
+  enrollments Enrollment[]
+  createdAt   DateTime     @default(now())
+}
+
+
+model PaymentOrder {
+  id                String   @id @default(cuid())
+  userId            String
+  resourceId        String
+  provider          String
+  providerOrderId   String   @unique
+  amountPaise       Int
+  currency          String   @default("INR")
+  status            String   @default("PENDING")
+  providerPaymentId String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  @@index([userId, resourceId])
+}
+
+model Enrollment {
+  id         String   @id @default(cuid())
+  userId     String
+  resourceId String
+  resource   Resource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  @@unique([userId, resourceId])
+  @@index([userId])
+}

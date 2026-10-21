@@ -1,0 +1,7 @@
+import { Box } from "@/components/three-scene";
+import Link from "next/link";
+import { ArrowLeft, RotateCcw, MousePointer2 } from "lucide-react";
+
+export default function ThreeDLearningPage() {
+  return <main className="page-shell container"><Link href="/" className="back-link"><ArrowLeft size={16}/> Back to home</Link><div className="page-heading"><span className="eyebrow">INTERACTIVE LEARNING LAB</span><h1>Explore in three dimensions.</h1><p>Drag to rotate, scroll to zoom, and explore this interactive 3D object.</p></div><div className="three-layout"><div className="three-stage"><Box/><div className="three-hint"><MousePointer2 size={15}/> Drag to rotate <span>·</span> Scroll to zoom</div></div><aside className="three-sidebar"><span className="eyebrow">YOUR 3D LAB</span><h2>Learn by exploring</h2><p>Interactive visual learning can help turn abstract ideas into something you can inspect from every angle.</p><div className="lesson-point"><span>01</span><div><b>Rotate</b><p>Click and drag to view the object from different sides.</p></div></div><div className="lesson-point"><span>02</span><div><b>Zoom</b><p>Use your mouse wheel or pinch gesture to zoom in and out.</p></div></div><div className="lesson-point"><span>03</span><div><b>Experiment</b><p>Try different angles and notice how the surfaces catch the light.</p></div></div><Link href="/classes" className="button button-primary full-width">Explore classes →</Link></aside></div></main>;
+}
